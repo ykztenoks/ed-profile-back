@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const UsedProductSchema = new Schema(
+const NewProductSchema = new Schema(
 
   {
     title: {
@@ -19,6 +19,7 @@ const UsedProductSchema = new Schema(
     },
     category: {
         type: String,
+        enum : ["new", "used"],
         required: true
     }
   },
@@ -28,7 +29,7 @@ const UsedProductSchema = new Schema(
   }
 );
 
-const UsedProduct = model("UsedProduct", UsedProductSchema);
+const NewProduct = model("NewProduct", NewProductSchema);
 
-module.exports = UsedProduct;
+module.exports = NewProduct;
 
