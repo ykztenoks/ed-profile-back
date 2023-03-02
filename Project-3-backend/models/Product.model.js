@@ -3,10 +3,6 @@ const { Schema, model } = require("mongoose");
 const ProductSchema = new Schema(
 
   {
-    id: {
-        type: Number,
-        unique: true
-      },
     title: {
         type: String,
         required: true
