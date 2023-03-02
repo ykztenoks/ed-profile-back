@@ -4,7 +4,7 @@ const Product = require('../../models/Product.model');
 
 
 router.get('/products', async (req, res) => {
-    res.json('you will see the used products here');
+    res.json('you will see the products here');
 })
 
 router.post('/products', async (req, res, next) => {
@@ -28,17 +28,6 @@ router.put('/products/update/:id', async (req, res, next) => {
     } catch (error) {
         console.error(error)
         
-    }
-}
-)
-
-router.delete('/:username/delete', async (req, res, next) => {
-    try {
-        const userDelete = await User.findOneAndDelete({ userName: req.params.username });
-        res.status(400).json({ msg: `No member with the username of ${req.params.username}` })
-
-    } catch (error) {
-        console.log(error); 
     }
 })
 
