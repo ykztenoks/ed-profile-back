@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const UsedProduct = require('../../models/UsedProduct.model');
+const NewProduct = require('../../models/NewProduct.model');
 
 
-router.get('/usedProducts', async (req, res) => {
-    res.json('you will see the used products here');
+router.get('/newProducts', async (req, res) => {
+    res.json('you will see the new products here');
 })
 
-router.post('/usedProducts', async (req, res, next) => {
+router.post('/newProducts', async (req, res, next) => {
     const body = req.body;
     try { 
-        const usedProduct = await UsedProduct.create(body);
-        console.log(usedProduct);
-        res.json(usedProduct);
+        const newProduct = await NewProduct.create(body);
+        console.log(newProduct);
+        res.json(newProduct);
     } catch (error) { 
         console.log(error);
     }

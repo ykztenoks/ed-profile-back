@@ -21,6 +21,12 @@ app.use(indexRoutes);
 const userRoutes = require('./routes/auth/user.routes')
 app.use(userRoutes)
 
+const newProductRoutes = require('./routes/auth/newProduct.routes')
+app.use(newProductRoutes)
+
+const usedProductRoutes = require('./routes/auth/usedProduct.routes')
+app.use(usedProductRoutes)
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
