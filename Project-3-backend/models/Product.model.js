@@ -18,28 +18,11 @@ const ProductSchema = new Schema(
         type: Number,
         required: true
     },
-    discountPercentage: {
-        type: Number
-    },
-    rating: {
-        type: Number
-    },
-    stock: {
-        type: Number
-    },
     brand: {
         type: String
     },
     category: {
         type: String,
-        required: true
-    },
-    thumbnail: {
-        type: String,
-        required: true
-    },
-    images: {
-        type: [String],
         required: true
     }
   },
