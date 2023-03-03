@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const User = require('../models/User.model');
 
 const NewProductSchema = new Schema(
 
@@ -21,7 +22,11 @@ const NewProductSchema = new Schema(
         type: String,
         enum : ["new", "used"],
         required: true
-    }
+    },
+  //   addedBy: {
+  //     type: Schema.Types.userName,
+  //     ref: User,
+  // }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    

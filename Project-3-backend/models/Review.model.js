@@ -19,10 +19,10 @@ const reviewSchema = new Schema(
             type: String,
             maxLength: 400,
         },
-        addedBy: {
-            type: Schema.Types.ObjectId,
-            ref: User,
-        }
+        // addedBy: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: User,
+        // }
     },
     {
     // this second object adds extra properties: `createdAt` and `updatedAt`    
