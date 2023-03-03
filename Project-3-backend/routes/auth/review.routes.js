@@ -2,11 +2,24 @@ const express = require('express');
 const router = express.Router();
 const Review = require('../../models/Review.model');
 
+// // get reviews page
+// router.get('/reviews', async (req, res) => {
+//     res.json('you will see the reviews here');
+// })
 
-router.get('/reviews', async (req, res) => {
-    res.json('you will see the reviews here');
-})
+// get all reviews
 
+router.get('/reviews', async (req, res, next) => {
+    try {
+    const allReviews = await Review.find()
+    res.status(200).json(allReviews)
+    console.log(allReviews)
+    res.json(error.status)
+  } catch (error) {
+  }
+  })
+
+// create a new review
 router.post('/reviews', async (req, res, next) => {
     const body = req.body;
     try { 
@@ -18,6 +31,7 @@ router.post('/reviews', async (req, res, next) => {
     }
 })
 
+// update one review by id
 router.put('/reviews/update/:id', async (req, res, next) => {
     const body = req.body
     console.log(body)
@@ -30,5 +44,17 @@ router.put('/reviews/update/:id', async (req, res, next) => {
         
     }
 })
+
+// delete one review by id
+router.delete('/reviews/delete/:id', async (req, res, next) => {
+    try {
+        const deletedReview = await Review.findOneAndDelete({ _id: req.params.id });
+        res.status(200).json("Review has been deleted.")
+        // res.status(400).json({ msg: `No review with the following id: ${req.params.id}` })
+    } catch (error) {
+        console.log(error); 
+    }
+})
+
 
 module.exports = router;
