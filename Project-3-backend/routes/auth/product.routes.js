@@ -4,7 +4,7 @@ const Product = require('../../models/Product.model');
 
 
 router.get('/products', async (req, res) => {
-    res.json('you will see the products here');
+    res.json('you will see the here');
 })
 
 router.post('/products', async (req, res, next) => {
