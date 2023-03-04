@@ -66,4 +66,16 @@ router.delete('/products/delete/:id', async (req, res, next) => {
     }
 })
 
+
+// get all products from one particular category
+router.get('/products/find/:category', async (req, res, next) => {
+    try {
+        const allProducts = await Product.find({ category: req.params.category})
+        res.status(200).json(allProducts)
+        console.log(allProducts)
+    } catch (error) {
+        res.json(error.status)
+    }
+})
+
 module.exports = router;
