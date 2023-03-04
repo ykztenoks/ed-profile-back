@@ -66,6 +66,8 @@ router.delete('/products/delete/:id', async (req, res, next) => {
     }
 })
 
+// get all products from 1 particular user
+
 
 // get all products from one particular category
 router.get('/products/find/:category', async (req, res, next) => {
