@@ -21,7 +21,7 @@ const NewProductSchema = new Schema(
     category: {
         type: String,
         enum : ["new", "used"],
-        required: true
+        required: true,
     },
   //   addedBy: {
   //     type: Schema.Types.userName,
