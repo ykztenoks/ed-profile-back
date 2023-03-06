@@ -60,9 +60,31 @@ router.delete('/products/delete/:id', async (req, res, next) => {
     try {
         const deletedProduct = await Product.findOneAndDelete({ _id: req.params.id });
         res.status(200).json("Product has been deleted")
-        // res.status(400).json({ msg: `No product with the following id: ${req.params.id}` })
     } catch (error) {
+        // res.status(400).json({ msg: `No product with the following id: ${req.params.id}` })
         console.log(error); 
+    }
+})
+
+// get all products from 1 particular user
+router.get('/products/find/user/:user', async (req, res, next) => {
+    try {
+        const allProducts = await Product.find({ addedBy: req.params.user})
+        res.status(200).json(allProducts)
+        console.log(allProducts)
+    } catch (error) {
+        res.json(error.status)
+    }
+})
+
+// get all products from one particular category
+router.get('/products/find/category/:category', async (req, res, next) => {
+    try {
+        const allProducts = await Product.find({ category: req.params.category})
+        res.status(200).json(allProducts)
+        console.log(allProducts)
+    } catch (error) {
+        res.json(error.status)
     }
 })
 

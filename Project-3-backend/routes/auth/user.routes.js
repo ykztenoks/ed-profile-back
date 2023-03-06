@@ -111,16 +111,14 @@ router.put("/:username/update", async (req, res, next) => {
 });
 
 // delete one user
-router.delete("/:username/delete", async (req, res, next) => {
-  try {
-    const userDelete = await User.findOneAndDelete({
-      userName: req.params.username,
-    });
-    res.status(200).json("User has been deleted");
-    // res.status(400).json({ msg: `No member with the username of ${req.params.username}` })
-  } catch (error) {
-    console.log(error);
-  }
-});
+router.delete('/:username/delete', async (req, res, next) => {
+    try {
+        const userDelete = await User.findOneAndDelete({ userName: req.params.username });
+        res.status(200).json("User has been deleted")
+    } catch (error) {
+        // res.status(400).json({ msg: `No member with the username of ${req.params.username}` })
+        console.log(error); 
+    }
+})
 
 module.exports = router;

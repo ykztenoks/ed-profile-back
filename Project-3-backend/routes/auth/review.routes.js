@@ -8,7 +8,6 @@ const Review = require('../../models/Review.model');
 // })
 
 // get all reviews
-
 router.get('/reviews', async (req, res, next) => {
     try {
     const allReviews = await Review.find()
@@ -17,7 +16,18 @@ router.get('/reviews', async (req, res, next) => {
     res.json(error.status)
   } catch (error) {
   }
-  })
+})
+
+// get all for one particular product
+router.get('/reviews/find/product/:product', async (req, res, next) => {
+    try {
+        const allReviews = await Review.find({ product: req.params.product})
+        res.status(200).json(allReviews)
+        console.log(allReviews)
+    } catch (error) {
+        res.json(error.status)
+    }
+})
 
 // create a new review
 router.post('/reviews', async (req, res, next) => {
@@ -50,11 +60,21 @@ router.delete('/reviews/delete/:id', async (req, res, next) => {
     try {
         const deletedReview = await Review.findOneAndDelete({ _id: req.params.id });
         res.status(200).json("Review has been deleted.")
-        // res.status(400).json({ msg: `No review with the following id: ${req.params.id}` })
     } catch (error) {
+        // res.status(400).json({ msg: `No review with the following id: ${req.params.id}` })
         console.log(error); 
     }
 })
 
+// get all for 1 particular user
+router.get('/reviews/find/user/:user', async (req, res, next) => {
+    try {
+        const allProducts = await Review.find({ addedBy: req.params.user})
+        res.status(200).json(allProducts)
+        console.log(allProducts)
+    } catch (error) {
+        res.json(error.status)
+    }
+})
 
 module.exports = router;
