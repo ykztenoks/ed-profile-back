@@ -23,10 +23,10 @@ const NewProductSchema = new Schema(
         enum : ["new", "used"],
         required: true,
     },
-    addedBy: {
+  addedBy: {
       type: Schema.Types.ObjectId,
-      ref: User
-    }
+      ref: User,
+   },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    

@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/User.model");
 const bcrypt = require("bcryptjs");
-const { isLoggedOut } = require("../../middleware/route-guard");
 const { findOneAndUpdate } = require("../../models/User.model");
 const { JsonWebTokenError } = require("jsonwebtoken");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { isAuthenticated } = require("../../middleware/jwt.middleware");
 
 // get sign up page
 
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
         },
         process.env.TOKEN_SECRET
       ); // adds a secret to the .env
-      res.json({ token, userName: currentUser.userName })
+      res.json({ "token": token, userName: currentUser.userName })
     } else {
       res.status(403).json({ message: "Wrong password" });
     }
@@ -66,6 +66,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Verify User
+
+router.post ('/verify', isAuthenticated, (req, res) => {
+if (req.payload) {
+  res.json(req.payload.data.user)
+}
+})
+
 // get all users
 
 router.get("/users", async (req, res, next) => {
@@ -73,7 +81,6 @@ router.get("/users", async (req, res, next) => {
     const allUsers = await User.find();
     res.status(200).json(allUsers);
     console.log(allUsers);
-    res.json(error.status);
   } catch (error) {
     console.log(error);
   }
