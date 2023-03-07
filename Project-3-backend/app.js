@@ -9,10 +9,25 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
+//adyen backend
+const config = require('./config') //port + base url
+const cors = require('cors')
+const corsOptions = {
+    origin: '*',
+}
+//different domains, ports, etc
+const baseUrl = config.baseUrl;
+const port = config.port;
+
 const app = express();
 
+//adyen middleware
+app.use(express.json())//middleware - req.res type cast
+app.use(cors(corsOptions));//middleware - cross origin
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
-require("./config")(app);
+// had to comment this out because it crashes otherwise
+// require("./config")(app);
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");

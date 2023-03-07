@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../../models/Product.model');
+const Review = require('../../models/Review.model');
 
 // // get products page
 // router.get('/products', async (req, res) => {
@@ -18,13 +19,26 @@ router.get('/products', async (req, res, next) => {
   }
 })
 
-// get one product by id
-router.get('/products/:id', async (req, res, next) => {
+//  // get one product by id
+//  router.get('/products/:id', async (req, res, next) => {
+//      try {
+//          const productId = req.params.id
+//         console.log(productId);
+//          const selectedProduct = await Product.findById(productId)
+//          res.json(selectedProduct)
+//   } catch (error) {
+//            console.log(error)
+//    }
+//  })
+
+// get one product by id and get all of its review
+router.get('/products/:id/withReviews', async (req, res, next) => {
     try {
         const productId = req.params.id
         console.log(productId);
         const selectedProduct = await Product.findById(productId)
-        res.json(selectedProduct)
+        const allReviews = await Review.find({product: productId})
+        res.json({selectedProduct, allReviews})
   } catch (error) {
       console.log(error)
   }
@@ -58,7 +72,7 @@ router.put('/products/update/:id', async (req, res, next) => {
 // delete one product by id
 router.delete('/products/delete/:id', async (req, res, next) => {
     try {
-        const deletedProduct = await Product.findOneAndDelete({ _id: req.params.id });
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
         res.status(200).json("Product has been deleted")
     } catch (error) {
         // res.status(400).json({ msg: `No product with the following id: ${req.params.id}` })
