@@ -1,4 +1,6 @@
-const { Schema, model } = require("mongoose");
+const Product = require('../models/Product.model');
+
+const { Schema, model , Types} = require("mongoose");
 
 const validateEmail = function(email) {
   let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -23,7 +25,11 @@ const userSchema = new Schema(
     passwordHash: {
       type: String,
       required: [true, 'Password is required.']
-    }
+    },
+    listedProducts: [{
+      type: Types.ObjectId, 
+      ref: Product,
+    }]
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    

@@ -1,7 +1,9 @@
 const express = require('express');
+const { isAuthenticated } = require('../../middleware/jwt.middleware');
 const router = express.Router();
 const Product = require('../../models/Product.model');
 const Review = require('../../models/Review.model');
+const isAuth = require("../../middleware/isAuth.js")
 
 // // get products page
 // router.get('/products', async (req, res) => {
@@ -45,7 +47,8 @@ router.get('/products/:id/withReviews', async (req, res, next) => {
 })
 
 // create a new product
-router.post('/products', async (req, res, next) => {
+router.post('/products',  async (req, res, next) => {
+console.log(req.payload)
     const body = req.body;
     try { 
         const product = await Product.create(body);

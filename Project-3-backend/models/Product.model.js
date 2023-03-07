@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-const User = require('../models/User.model');
+const { Schema, model, Types } = require("mongoose");
+const {User} = require('../models/User.model');
 
 const NewProductSchema = new Schema(
 
@@ -25,7 +25,7 @@ const NewProductSchema = new Schema(
     },
   addedBy: {
       type: Schema.Types.ObjectId,
-      ref: User,
+      ref: "User",
    },
   },
   {

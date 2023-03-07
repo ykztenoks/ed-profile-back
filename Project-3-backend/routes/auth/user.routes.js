@@ -68,8 +68,9 @@ router.post("/login", async (req, res) => {
 
 // Verify User
 
-router.post ('/verify', isAuthenticated, (req, res) => {
+router.get ('/verify', isAuthenticated, (req, res) => {
 if (req.payload) {
+  console.log(req.payload)
   res.json(req.payload.data.user)
 }
 })
