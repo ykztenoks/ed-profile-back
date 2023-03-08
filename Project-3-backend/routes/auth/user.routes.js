@@ -4,7 +4,7 @@ const User = require("../../models/User.model");
 const bcrypt = require("bcryptjs");
 const { findOneAndUpdate } = require("../../models/User.model");
 const { JsonWebTokenError } = require("jsonwebtoken");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require("../../middleware/jwt.middleware");
 
 // get sign up page
@@ -46,18 +46,18 @@ router.post("/login", async (req, res) => {
     const currentUser = matchedUserArr[0];
     //Check password
     if (bcrypt.compareSync(req.body.passwordHash, currentUser.passwordHash)) {
-   
-
       //Generate the JWT
- 
+
       const token = jwt.sign(
         {
           exp: Math.floor(Date.now() / 1000) + 60 * 60, // makes sure the token will expire after a set time
-          data: { user: { userName: currentUser.userName, email: currentUser.email } },
+          data: {
+            user: { userName: currentUser.userName, email: currentUser.email },
+          },
         },
         process.env.TOKEN_SECRET
       ); // adds a secret to the .env
-      res.json({ "token": token, userName: currentUser.userName })
+      res.json({ token: token, user: currentUser });
     } else {
       res.status(403).json({ message: "Wrong password" });
     }
@@ -68,14 +68,27 @@ router.post("/login", async (req, res) => {
 
 // Verify User
 
-router.get ('/verify', isAuthenticated, (req, res) => {
-if (req.payload) {
-  console.log(req.payload)
-  res.json(req.payload.data.user)
-}
-})
+router.get("/verify", isAuthenticated, (req, res) => {
+  if (req.payload) {
+    console.log(req.payload, "payload bitch 😡😡");
+    res.json(req.payload.data.user);
+  }
+});
 
 // get all users
+
+router.get("/profile", isAuthenticated, async (req, res) => {
+  try {
+    const user = await User.findOne({
+      userName: req.payload.data.user.userName,
+    });
+    delete user._doc.passwordHash;
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(error);
+  }
+});
 
 router.get("/users", async (req, res, next) => {
   try {
@@ -119,14 +132,16 @@ router.put("/:username/update", async (req, res, next) => {
 });
 
 // delete one user
-router.delete('/:username/delete', async (req, res, next) => {
-    try {
-        const userDelete = await User.findOneAndDelete({ userName: req.params.username });
-        res.status(200).json("User has been deleted")
-    } catch (error) {
-        // res.status(400).json({ msg: `No member with the username of ${req.params.username}` })
-        console.log(error); 
-    }
-})
+router.delete("/:username/delete", async (req, res, next) => {
+  try {
+    const userDelete = await User.findOneAndDelete({
+      userName: req.params.username,
+    });
+    res.status(200).json("User has been deleted");
+  } catch (error) {
+    // res.status(400).json({ msg: `No member with the username of ${req.params.username}` })
+    console.log(error);
+  }
+});
 
 module.exports = router;

@@ -1,7 +1,7 @@
-const{ expressjwt} = require('express-jwt')
-require('dotenv').config()
+// const{ expressjwt} = require('express-jwt')
+// require('dotenv').config()
 
-module.exports =  expressjwt({
-  secret: process.env.TOKEN_SECRET,
-  algorithms: ["HS256"],
-});
+// module.exports =  expressjwt({
+//   secret: process.env.TOKEN_SECRET,
+//   algorithms: ["HS256"],
+// });
